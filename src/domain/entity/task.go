@@ -2,7 +2,7 @@ package entity
 
 // TaskはTodoリストのタスクに関する情報を保持する構造体です
 type Task struct {
-	Id   string
+	Id   int
 	Name string
 	Done bool
 }
