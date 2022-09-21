@@ -25,7 +25,7 @@ func (h *TaskHandler) GetAllTask(ctx *gin.Context) {
 		ctx.JSON(
 			http.StatusBadRequest,
 			gin.H{
-				"error": fmt.Errorf("TaskHandler.GetAllTask GetAllTask Error : %w", err),
+				"error": fmt.Errorf("TaskHandler.GetAllTask GetAllTask Error : %w", err).Error(),
 			},
 		)
 		return
