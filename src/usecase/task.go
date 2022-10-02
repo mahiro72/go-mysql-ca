@@ -20,7 +20,7 @@ func NewTaskUseCase(r repository.TaskRepository) *TaskUseCase {
 }
 
 // GetAllTaskはrepositoryの関数を呼び出し、すべてのタスクを返します
-func (u *TaskUseCase) GetAllTask() ([]*entity.Task, error) {
+func (u *TaskUseCase) GetAllTask() (entity.Tasks, error) {
 	tasks, err := u.taskRepo.GetAllTask()
 	if err != nil {
 		return nil, fmt.Errorf("TaskUseCase.GetAllTask GetAllTask Error : %w", err)
