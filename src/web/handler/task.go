@@ -115,16 +115,16 @@ func (h *TaskHandler) ChangeTaskStatus(ctx *gin.Context) {
 
 // taskJsonはtaskの情報をJSONにバインドするための構造体です
 type taskJson struct {
-	Id   int    `json:"id"`
-	Name string `json:"name"`
-	Status string   `json:"status"`
+	Id     int    `json:"id"`
+	Name   string `json:"name"`
+	Status string `json:"status"`
 }
 
 // taskEntityToJsonはentity.TaskをtaskJson型に変換します
 func taskEntityToJson(task *entity.Task) *taskJson {
 	return &taskJson{
-		Id:   task.Id,
-		Name: task.Name,
+		Id:     task.Id,
+		Name:   task.Name,
 		Status: task.Status,
 	}
 }
@@ -141,8 +141,8 @@ func taskEntityListToJson(tasks entity.Tasks) []*taskJson {
 // taskJsonToEntityはtaskJson型のオブジェクトをentity.Taskに変換します
 func taskJsonToEntity(taskJson *taskJson) *entity.Task {
 	return &entity.Task{
-		Id:   taskJson.Id,
-		Name: taskJson.Name,
+		Id:     taskJson.Id,
+		Name:   taskJson.Name,
 		Status: taskJson.Status,
 	}
 }

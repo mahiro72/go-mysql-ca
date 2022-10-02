@@ -60,16 +60,16 @@ func (r *TaskRepository) ChangeTaskStatus(task *entity.Task) (*entity.Task, erro
 // entityのtaskのデータをやり取りするオブジェクトです
 // またDTOとは、Data Transfer Objectの略です
 type taskDTO struct {
-	Id   int    `db:"id"`
-	Name string `db:"name"`
-	Status string   `db:"status"`
+	Id     int    `db:"id"`
+	Name   string `db:"name"`
+	Status string `db:"status"`
 }
 
 // taskEntityToDTOはtaskのentityをdtoに変えます
 func taskEntityToDTO(task *entity.Task) taskDTO {
 	return taskDTO{
-		Id:   task.Id,
-		Name: task.Name,
+		Id:     task.Id,
+		Name:   task.Name,
 		Status: task.Status,
 	}
 }
@@ -79,8 +79,8 @@ func taskDTOsToEntities(dtos []taskDTO) entity.Tasks {
 	tasks := entity.Tasks{}
 	for _, dto := range dtos {
 		tasks = append(tasks, &entity.Task{
-			Id:   dto.Id,
-			Name: dto.Name,
+			Id:     dto.Id,
+			Name:   dto.Name,
 			Status: dto.Status,
 		})
 	}
@@ -90,8 +90,8 @@ func taskDTOsToEntities(dtos []taskDTO) entity.Tasks {
 // taskDTOtoEntityはtaskのdtoをentityに変えます
 func taskDTOtoEntity(dto taskDTO) *entity.Task {
 	return &entity.Task{
-		Id:   dto.Id,
-		Name: dto.Name,
+		Id:     dto.Id,
+		Name:   dto.Name,
 		Status: dto.Status,
 	}
 }
