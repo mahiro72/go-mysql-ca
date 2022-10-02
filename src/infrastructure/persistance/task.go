@@ -9,7 +9,7 @@ import (
 )
 
 // TaskRepositoryがdomainのinterfaceを満たしているか確認します
-var _ repository.TaskRepository = &TaskRepository{}
+var _ repository.ITaskRepository = &TaskRepository{}
 
 // TaskRepositoryはrepository.TaskRepositoryを満たす構造体です
 type TaskRepository struct {

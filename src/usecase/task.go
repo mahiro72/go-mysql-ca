@@ -9,7 +9,7 @@ import (
 
 // TaskUseCaseはTaskに関するユースケースです
 type TaskUseCase struct {
-	taskRepo repository.TaskRepository
+	taskRepo repository.ITaskRepository
 }
 
 // ITaskUsecaseはTaskに関するユースケースのインターフェースです
@@ -20,7 +20,7 @@ type ITaskUsecase interface {
 }
 
 // NewTaskUseCaseはTaskUseCaseのオブジェクトのポインタを生成する関数です
-func NewTaskUseCase(r repository.TaskRepository) *TaskUseCase {
+func NewTaskUseCase(r repository.ITaskRepository) *TaskUseCase {
 	return &TaskUseCase{
 		taskRepo: r,
 	}
