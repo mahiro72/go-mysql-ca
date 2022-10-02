@@ -2,7 +2,6 @@ package handler
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -12,11 +11,11 @@ import (
 
 // TaskHandlerはhttpをルーティングするハンドラーに関する構造体です
 type TaskHandler struct {
-	taskUC *usecase.TaskUseCase
+	taskUC usecase.ITaskUsecase
 }
 
 // NewTaskHandlerはTaskHandlerのオブジェクトのポインタを生成する関数です
-func NewTaskHandler(u *usecase.TaskUseCase) *TaskHandler {
+func NewTaskHandler(u usecase.ITaskUsecase) *TaskHandler {
 	return &TaskHandler{
 		taskUC: u,
 	}
@@ -59,7 +58,6 @@ func (h *TaskHandler) CreateTask(ctx *gin.Context) {
 	task := taskJsonToEntity(&b)
 
 	task, err := h.taskUC.CreateTask(task)
-	log.Println("task2", task, b)
 	if err != nil {
 		ctx.JSON(
 			http.StatusBadRequest,
