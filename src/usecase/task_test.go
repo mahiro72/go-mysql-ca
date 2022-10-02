@@ -94,7 +94,7 @@ func TestTaskUsecase_ChangeTaskStatus(t *testing.T) {
 			task: &entity.Task{
 				Id: 1,
 			},
-			wantErr: fmt.Errorf("TaskUseCase.ChangeTaskStatus Id Error : task id required"),
+			wantErr: fmt.Errorf("TaskUseCase.ChangeTaskStatus Status Error : task status required"),
 		},
 	}
 
