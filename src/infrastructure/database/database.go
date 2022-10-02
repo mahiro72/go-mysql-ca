@@ -1,17 +1,22 @@
 package database
 
 import (
-	"database/sql"
 	"fmt"
 
 	"github.com/mahiro72/go-mysql-ca/config"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 )
 
-// NewDBはMySQLを接続し、sql.DBオブジェクトのポインタを返します
-func NewDB() (*sql.DB, error) {
-	db, err := sql.Open("mysql", config.DSN())
+// ConnはDBとの接続情報をもつ構造体です
+type Conn struct {
+	DB *sqlx.DB
+}
+
+// NewConnはMySQLを接続し、sql.DBオブジェクトのポインタをもつ構造体を返します
+func NewConn() (*Conn, error) {
+	db, err := sqlx.Connect("mysql", config.DSN())
 	if err != nil {
 		return nil, fmt.Errorf("failed to open MySQL : %w", err)
 	}
@@ -23,5 +28,5 @@ func NewDB() (*sql.DB, error) {
 		return nil, fmt.Errorf("failed to db ping : %w", err)
 	}
 
-	return db, nil
+	return &Conn{DB: db}, nil
 }

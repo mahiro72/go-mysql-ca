@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  db:
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_HOST=${DB_HOST}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}

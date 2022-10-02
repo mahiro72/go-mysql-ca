@@ -2,23 +2,27 @@ package handler
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/mahiro72/go-mysql-ca/domain/entity"
 	"github.com/mahiro72/go-mysql-ca/usecase"
-	"github.com/mahiro72/go-mysql-ca/web/response"
 )
 
+// TaskHandlerはhttpをルーティングするハンドラーに関する構造体です
 type TaskHandler struct {
 	taskUC *usecase.TaskUseCase
 }
 
+// NewTaskHandlerはTaskHandlerのオブジェクトのポインタを生成する関数です
 func NewTaskHandler(u *usecase.TaskUseCase) *TaskHandler {
 	return &TaskHandler{
 		taskUC: u,
 	}
 }
 
+// GetAllTaskはすべてのタスクを返すハンドラーです
 func (h *TaskHandler) GetAllTask(ctx *gin.Context) {
 	tasks, err := h.taskUC.GetAllTask()
 	if err != nil {
@@ -31,11 +35,114 @@ func (h *TaskHandler) GetAllTask(ctx *gin.Context) {
 		return
 	}
 
-	tasksRes := response.NewTasksResponse(tasks)
+	taskListResp := taskEntityListToJson(tasks)
 	ctx.JSON(
 		http.StatusOK,
 		gin.H{
-			"data": tasksRes,
+			"data": taskListResp,
 		},
 	)
+}
+
+// CreateTaskは新しいタスクを保存するハンドラーです
+func (h *TaskHandler) CreateTask(ctx *gin.Context) {
+	var b taskJson
+	if err := ctx.ShouldBindJSON(&b); err != nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"error": fmt.Errorf("TaskHandler.CreateTask ShouldBindJSON Error : %w", err).Error(),
+			},
+		)
+		return
+	}
+	task := taskJsonToEntity(&b)
+
+	task, err := h.taskUC.CreateTask(task)
+	log.Println("task2", task, b)
+	if err != nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"error": fmt.Errorf("TaskHandler.CreateTask CreateTask Error : %w", err).Error(),
+			},
+		)
+		return
+	}
+
+	taskResp := taskEntityToJson(task)
+	ctx.JSON(
+		http.StatusOK,
+		gin.H{
+			"data": taskResp,
+		},
+	)
+}
+
+// ChangeTaskStatusはtaskのDoneを更新するhandlerです
+func (h *TaskHandler) ChangeTaskStatus(ctx *gin.Context) {
+	var b taskJson
+	if err := ctx.ShouldBindJSON(&b); err != nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"error": fmt.Errorf("TaskHandler.ChangeTaskStatus ShouldBindJSON Error : %w", err).Error(),
+			},
+		)
+		return
+	}
+	task := taskJsonToEntity(&b)
+
+	task, err := h.taskUC.ChangeTaskStatus(task)
+	if err != nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"error": fmt.Errorf("TaskHandler.ChangeTaskStatus ChangeTaskStatus Error : %w", err).Error(),
+			},
+		)
+		return
+	}
+
+	taskResp := taskEntityToJson(task)
+	ctx.JSON(
+		http.StatusOK,
+		gin.H{
+			"data": taskResp,
+		},
+	)
+}
+
+// taskJsonはtaskの情報をJSONにバインドするための構造体です
+type taskJson struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+	Done bool   `json:"done"`
+}
+
+// taskEntityToJsonはentity.TaskをtaskJson型に変換します
+func taskEntityToJson(t *entity.Task) *taskJson {
+	return &taskJson{
+		Id:   t.Id,
+		Name: t.Name,
+		Done: t.Done,
+	}
+}
+
+// taskEntityListToJsonはentity.TaskのリストをtaskJsonのリストに変換します
+func taskEntityListToJson(tasks entity.Tasks) []*taskJson {
+	var taskJsonList []*taskJson
+	for _, t := range tasks {
+		taskJsonList = append(taskJsonList, taskEntityToJson(t))
+	}
+	return taskJsonList
+}
+
+// taskJsonToEntityはtaskJson型のオブジェクトをentity.Taskに変換します
+func taskJsonToEntity(taskJson *taskJson) *entity.Task {
+	return &entity.Task{
+		Id:   taskJson.Id,
+		Name: taskJson.Name,
+		Done: taskJson.Done,
+	}
 }

@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  server:
+    build:
+      context: ../src
+      dockerfile: Dockerfile
+    container_name: server_go-mysql-ca
+    restart: always
+    tty: true
+    ports:
+      - 8080:8080
+    volumes:
+    - ../src:/go/src/github.com/mahiro72/go-mysql-ca
+
+
+  db:
+    build:
+      context: ../db
+      dockerfile: Dockerfile
+    container_name: db_go-mysql-ca
+    restart: always
+    tty: true
+    ports:
+      - 3306:3306
+    volumes:
+      - ../db/data:/var/lib/mysql
+      - ../db/mysql/conf/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ../db/mysql/sql:/docker-entrypoint-initdb.d

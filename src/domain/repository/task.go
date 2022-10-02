@@ -5,5 +5,7 @@ import (
 )
 
 type TaskRepository interface {
-	GetAllTask() ([]*entity.Task, error)
+	GetAllTask() (entity.Tasks, error)
+	CreateTask(task *entity.Task) (*entity.Task, error)
+	ChangeTaskStatus(task *entity.Task) (*entity.Task, error)
 }

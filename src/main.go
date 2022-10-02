@@ -3,18 +3,18 @@ package main
 import (
 	"log"
 
-	"github.com/mahiro72/go-mysql-ca/database"
+	"github.com/mahiro72/go-mysql-ca/infrastructure/database"
 	"github.com/mahiro72/go-mysql-ca/web/router"
 )
 
 func main() {
-	db, err := database.NewDB()
+	conn, err := database.NewConn()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	defer func() {
-		err := db.Close()
+		err := conn.DB.Close()
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -23,7 +23,7 @@ func main() {
 	// Routerの初期化
 	r := router.NewRouter()
 	r.Health()
-	r.NewTaskRouter(db)
+	r.NewTaskRouter(conn)
 
 	// Routerの起動
 	r.Serve()

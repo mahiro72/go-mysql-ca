@@ -6,3 +6,5 @@ type Task struct {
 	Name string
 	Done bool
 }
+
+type Tasks []*Task
