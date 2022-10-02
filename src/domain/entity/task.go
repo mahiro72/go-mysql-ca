@@ -7,4 +7,5 @@ type Task struct {
 	Status string
 }
 
+// TasksはTaskのリストの型です
 type Tasks []*Task
