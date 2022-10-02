@@ -79,7 +79,8 @@ func TestTaskUsecase_ChangeTaskStatus(t *testing.T) {
 		{
 			name: "正常に動いている場合",
 			task: &entity.Task{
-				Id: 1,
+				Id:     1,
+				Status: "done",
 			},
 			wantErr: nil,
 		},
@@ -87,6 +88,13 @@ func TestTaskUsecase_ChangeTaskStatus(t *testing.T) {
 			name:    "必要なフィールド(id)がなかった場合",
 			task:    &entity.Task{},
 			wantErr: fmt.Errorf("TaskUseCase.ChangeTaskStatus Id Error : task id required"),
+		},
+		{
+			name: "必要なフィールド(status)がなかった場合",
+			task: &entity.Task{
+				Id: 1,
+			},
+			wantErr: fmt.Errorf("TaskUseCase.ChangeTaskStatus Status Error : task status required"),
 		},
 	}
 
