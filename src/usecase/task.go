@@ -12,6 +12,7 @@ type TaskUseCase struct {
 	taskRepo repository.TaskRepository
 }
 
+// ITaskUsecaseはTaskに関するユースケースのインターフェースです
 type ITaskUsecase interface {
 	GetAllTask() (entity.Tasks, error)
 	CreateTask(task *entity.Task) (*entity.Task, error)
