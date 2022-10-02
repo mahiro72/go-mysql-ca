@@ -1,5 +1,5 @@
-INSERT INTO tasks (`name`, `done`) VALUES ("task1", true);
-INSERT INTO tasks (`name`, `done`) VALUES ("task2", true);
-INSERT INTO tasks (`name`, `done`) VALUES ("task3", true);
-INSERT INTO tasks (`name`, `done`) VALUES ("task4", false);
-INSERT INTO tasks (`name`, `done`) VALUES ("task5", false);
+INSERT INTO tasks (`name`, `status`) VALUES ("task1", "todo");
+INSERT INTO tasks (`name`, `status`) VALUES ("task2", "todo");
+INSERT INTO tasks (`name`, `status`) VALUES ("task3", "doing");
+INSERT INTO tasks (`name`, `status`) VALUES ("task4", "doing");
+INSERT INTO tasks (`name`, `status`) VALUES ("task5", "done");

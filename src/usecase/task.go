@@ -5,7 +5,6 @@ import (
 
 	"github.com/mahiro72/go-mysql-ca/domain/entity"
 	"github.com/mahiro72/go-mysql-ca/domain/repository"
-	"github.com/mahiro72/go-mysql-ca/utils/helper"
 )
 
 // TaskUseCaseはTaskに関するユースケースです
@@ -39,7 +38,6 @@ func (u *TaskUseCase) CreateTask(task *entity.Task) (*entity.Task, error) {
 }
 
 func (u *TaskUseCase) ChangeTaskStatus(task *entity.Task) (*entity.Task, error) {
-	task.Done = helper.ChangeStatus(task.Done)
 	task, err := u.taskRepo.ChangeTaskStatus(task)
 	if err != nil {
 		return nil, fmt.Errorf("TaskUseCase.ChangeTaskStatus ChangeTaskStatus Error : %w", err)

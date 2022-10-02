@@ -4,7 +4,7 @@ package entity
 type Task struct {
 	Id   int
 	Name string
-	Done bool
+	Status string
 }
 
 type Tasks []*Task

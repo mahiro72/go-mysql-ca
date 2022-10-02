@@ -79,7 +79,7 @@ func (h *TaskHandler) CreateTask(ctx *gin.Context) {
 	)
 }
 
-// ChangeTaskStatusはtaskのDoneを更新するhandlerです
+// ChangeTaskStatusはtaskのStatusを更新するhandlerです
 func (h *TaskHandler) ChangeTaskStatus(ctx *gin.Context) {
 	var b taskJson
 	if err := ctx.ShouldBindJSON(&b); err != nil {
@@ -117,15 +117,15 @@ func (h *TaskHandler) ChangeTaskStatus(ctx *gin.Context) {
 type taskJson struct {
 	Id   int    `json:"id"`
 	Name string `json:"name"`
-	Done bool   `json:"done"`
+	Status string   `json:"status"`
 }
 
 // taskEntityToJsonはentity.TaskをtaskJson型に変換します
-func taskEntityToJson(t *entity.Task) *taskJson {
+func taskEntityToJson(task *entity.Task) *taskJson {
 	return &taskJson{
-		Id:   t.Id,
-		Name: t.Name,
-		Done: t.Done,
+		Id:   task.Id,
+		Name: task.Name,
+		Status: task.Status,
 	}
 }
 
@@ -143,6 +143,6 @@ func taskJsonToEntity(taskJson *taskJson) *entity.Task {
 	return &entity.Task{
 		Id:   taskJson.Id,
 		Name: taskJson.Name,
-		Done: taskJson.Done,
+		Status: taskJson.Status,
 	}
 }

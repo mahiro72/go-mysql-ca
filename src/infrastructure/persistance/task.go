@@ -25,8 +25,8 @@ func NewTaskRepository(conn *database.Conn) *TaskRepository {
 // GetAllTaskはすべてのTaskを返します
 func (r *TaskRepository) GetAllTask() (entity.Tasks, error) {
 	var dtos []taskDTO
-
 	query := `SELECT * FROM tasks`
+
 	if err := r.conn.DB.Select(&dtos, query); err != nil {
 		return nil, helper.CreateErrorMessage("TaskRepositoy.GetAllTask Select Error", err)
 	}
@@ -35,7 +35,7 @@ func (r *TaskRepository) GetAllTask() (entity.Tasks, error) {
 
 // CreateTaskは受け取ったtaskをDBに保存します
 func (r *TaskRepository) CreateTask(task *entity.Task) (*entity.Task, error) {
-	query := `INSERT INTO tasks (name, done) VALUES (:name, false)`
+	query := `INSERT INTO tasks (name, status) VALUES (:name, "todo")`
 
 	dto := taskEntityToDTO(task)
 	_, err := r.conn.DB.NamedExec(query, dto)
@@ -45,9 +45,9 @@ func (r *TaskRepository) CreateTask(task *entity.Task) (*entity.Task, error) {
 	return taskDTOtoEntity(dto), nil
 }
 
-// ChangeTaskStatusは指定したidをtasksで検索し、見つけた場合doneのstatusを変更します
+// ChangeTaskStatusは指定したidをtasksで検索し、見つけた場合statusを更新します
 func (r *TaskRepository) ChangeTaskStatus(task *entity.Task) (*entity.Task, error) {
-	query := `UPDATE tasks SET done = :done where id = :id`
+	query := `UPDATE tasks SET status = :status where id = :id`
 
 	dto := taskEntityToDTO(task)
 	_, err := r.conn.DB.NamedExec(query, dto)
@@ -62,7 +62,7 @@ func (r *TaskRepository) ChangeTaskStatus(task *entity.Task) (*entity.Task, erro
 type taskDTO struct {
 	Id   int    `db:"id"`
 	Name string `db:"name"`
-	Done bool   `db:"done"`
+	Status string   `db:"status"`
 }
 
 // taskEntityToDTOはtaskのentityをdtoに変えます
@@ -70,7 +70,7 @@ func taskEntityToDTO(task *entity.Task) taskDTO {
 	return taskDTO{
 		Id:   task.Id,
 		Name: task.Name,
-		Done: task.Done,
+		Status: task.Status,
 	}
 }
 
@@ -81,7 +81,7 @@ func taskDTOsToEntities(dtos []taskDTO) entity.Tasks {
 		tasks = append(tasks, &entity.Task{
 			Id:   dto.Id,
 			Name: dto.Name,
-			Done: dto.Done,
+			Status: dto.Status,
 		})
 	}
 	return tasks
@@ -92,6 +92,6 @@ func taskDTOtoEntity(dto taskDTO) *entity.Task {
 	return &entity.Task{
 		Id:   dto.Id,
 		Name: dto.Name,
-		Done: dto.Done,
+		Status: dto.Status,
 	}
 }
