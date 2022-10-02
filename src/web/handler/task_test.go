@@ -133,9 +133,6 @@ func TestHandler_ChangeTaskStatus(t *testing.T) {
 	}
 }
 
-
-
-
 // ここでテストデータの用意をします
 var (
 	testGetAllTask []*entity.Task = []*entity.Task{
@@ -144,13 +141,13 @@ var (
 		{Id: 1, Name: "hoge", Status: "todo"},
 	}
 	testCreateTask *entity.Task = &entity.Task{
-		Id: 0,
-		Name: "hoge",
+		Id:     0,
+		Name:   "hoge",
 		Status: "",
 	}
 	testChangeTaskStatus *entity.Task = &entity.Task{
-		Id: 0,
-		Name: "",
+		Id:     0,
+		Name:   "",
 		Status: "done",
 	}
 )

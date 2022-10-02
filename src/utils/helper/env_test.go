@@ -24,12 +24,12 @@ func TestEnv_GetEnvOrDefault(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name,func(t *testing.T) {
+		t.Run(tt.name, func(t *testing.T) {
 			// 環境変数hogeにhogehogeをセットする
-			t.Setenv("hoge","hogehoge")
-			got := GetEnvOrDefault(tt.envPath,tt.defaultEnv)
-			if got!=tt.want{
-				t.Errorf("TestEnv_GetEnvOrDefault Error : want %s, but got %s",tt.want,got)
+			t.Setenv("hoge", "hogehoge")
+			got := GetEnvOrDefault(tt.envPath, tt.defaultEnv)
+			if got != tt.want {
+				t.Errorf("TestEnv_GetEnvOrDefault Error : want %s, but got %s", tt.want, got)
 			}
 		})
 	}
