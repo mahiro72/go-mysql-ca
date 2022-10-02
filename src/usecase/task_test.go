@@ -79,7 +79,7 @@ func TestTaskUsecase_ChangeTaskStatus(t *testing.T) {
 		{
 			name: "正常に動いている場合",
 			task: &entity.Task{
-				Name: "hoge",
+				Id: 1,
 			},
 			wantErr: nil,
 		},

@@ -17,6 +17,9 @@ DOCKER_COMPOSE_DEV_SERVER:=$(DOCKER_FILE_DIR)/docker-compose.dev.server.yml
 DOCKER_EXEC:=docker exec -it
 DB_CONTAINER_NAME:=db_go-mysql-ca
 
+# dir
+SRC_DIR:=./src
+
 # volume
 DATA_DIR:=./db/data
 
@@ -55,6 +58,10 @@ del-data:
 .PHONY: attach-db
 attach-db: ## dockerのdbコンテナにアクセスする
 	$(DOCKER_EXEC) $(DB_CONTAINER_NAME) bash
+
+.PHONY: lint
+lint: ## goのコードを整形する
+	cd $(SRC_DIR) && gofmt -l -w .
 
 .PHONY: help
 help: ## コマンドの一覧を標示する
