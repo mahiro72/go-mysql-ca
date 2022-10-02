@@ -1,10 +1,11 @@
 package persistance
 
 import (
+	"fmt"
+
 	"github.com/mahiro72/go-mysql-ca/domain/entity"
 	"github.com/mahiro72/go-mysql-ca/domain/repository"
 	"github.com/mahiro72/go-mysql-ca/infrastructure/database"
-	"github.com/mahiro72/go-mysql-ca/utils/helper"
 )
 
 // TaskRepositoryがdomainのinterfaceを満たしているか確認します
@@ -28,7 +29,7 @@ func (r *TaskRepository) GetAllTask() (entity.Tasks, error) {
 	query := `SELECT * FROM tasks`
 
 	if err := r.conn.DB.Select(&dtos, query); err != nil {
-		return nil, helper.CreateErrorMessage("TaskRepositoy.GetAllTask Select Error", err)
+		return nil, fmt.Errorf("TaskRepositoy.GetAllTask Select Error : %w", err)
 	}
 	return taskDTOsToEntities(dtos), nil
 }
@@ -40,7 +41,7 @@ func (r *TaskRepository) CreateTask(task *entity.Task) (*entity.Task, error) {
 	dto := taskEntityToDTO(task)
 	_, err := r.conn.DB.NamedExec(query, dto)
 	if err != nil {
-		return nil, helper.CreateErrorMessage("TaskRepositoy.CreateTask NamedExec Error", err)
+		return nil, fmt.Errorf("TaskRepositoy.CreateTask NamedExec Error : %w", err)
 	}
 	return taskDTOtoEntity(dto), nil
 }
@@ -52,7 +53,7 @@ func (r *TaskRepository) ChangeTaskStatus(task *entity.Task) (*entity.Task, erro
 	dto := taskEntityToDTO(task)
 	_, err := r.conn.DB.NamedExec(query, dto)
 	if err != nil {
-		return nil, helper.CreateErrorMessage("TaskRepositoy.ChangeTaskStatus NamedExec Error", err)
+		return nil, fmt.Errorf("TaskRepositoy.ChangeTaskStatus NamedExec Error : %w", err)
 	}
 	return taskDTOtoEntity(dto), nil
 }
