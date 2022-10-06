@@ -22,6 +22,8 @@ func main() {
 
 	// Routerの初期化
 	r := router.NewRouter()
+	r.SetMiddleware()
+
 	r.Health()
 	r.NewTaskRouter(conn)
 

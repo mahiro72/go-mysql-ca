@@ -13,7 +13,7 @@ type Router struct {
 
 // NewRouterは新しいRouterを初期化し構造体のポインタを返します
 func NewRouter() *Router {
-	e := gin.Default()
+	e := gin.New()
 	return &Router{
 		engine: e,
 	}
@@ -22,4 +22,10 @@ func NewRouter() *Router {
 // Serveはhttpサーバーを起動します
 func (r *Router) Serve() {
 	r.engine.Run(fmt.Sprintf(":%s", config.Port()))
+}
+
+// NewMiddlewareはmiddlewareを用意します
+func (r *Router) SetMiddleware() {
+	r.engine.Use(gin.Logger())
+	r.engine.Use(gin.Recovery())
 }
