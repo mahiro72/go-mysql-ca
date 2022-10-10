@@ -16,7 +16,12 @@ type Conn struct {
 
 // NewConnはMySQLを接続し、sql.DBオブジェクトのポインタをもつ構造体を返します
 func NewConn() (*Conn, error) {
-	db, err := sqlx.Connect("mysql", config.DSN())
+	dbDSN,err := config.DSN()
+	if err != nil {
+		return nil, err
+	}
+
+	db, err := sqlx.Connect("mysql", dbDSN)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open MySQL : %w", err)
 	}
