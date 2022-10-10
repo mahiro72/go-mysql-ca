@@ -24,4 +24,6 @@ src配下の各ディレクトリ構成は以下の通りです
 
 ## 依存関係図
 
+矢印は依存の方向を表しています
+
 <img src="./img/architecture-miro.png" width="500px">
