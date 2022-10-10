@@ -2,6 +2,8 @@
 
 このアプリではCleanArchitectureを採用してます
 
+## ディレクトリ構成
+
 src配下の各ディレクトリ構成は以下の通りです
 
 ```
@@ -20,3 +22,6 @@ src配下の各ディレクトリ構成は以下の通りです
 |  |--router        # ルーティング処理を記述します
 ```
 
+## 依存関係図
+
+<img src="./img/architecture-miro.png" width="500px">
