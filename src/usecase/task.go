@@ -7,6 +7,9 @@ import (
 	"github.com/mahiro72/go-mysql-ca/domain/repository"
 )
 
+// TaskUseCaseがITaskUsecaseを満たしているか確認します
+var _ ITaskUsecase = &TaskUseCase{}
+
 // TaskUseCaseはTaskに関するユースケースです
 type TaskUseCase struct {
 	taskRepo repository.ITaskRepository
