@@ -1,11 +1,10 @@
 # Getting Started
 
 docker 環境を立ち上げる
+
 ```
 make up
 ```
-
-⚠️エラー```make: command not found```が出た時
 
 <br>
 

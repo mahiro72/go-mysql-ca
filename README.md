@@ -1,12 +1,12 @@
 # TODO LIST API
 
+## About
+
 このリポジトリはGoで書かれたTodo List APIです
 
 <br>
 
-## About
-
-Go × MySQL × CleanArchitectureで実装されています
+実装について、技術はGoやMySQL、アーキテクチャはCleanArchitectureを採用しています
 
 アプリケーションの起動については、[こちら](./doc/getting_started.md)を参考にしてください
 
